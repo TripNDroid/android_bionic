@@ -445,6 +445,13 @@
 /* Used to tag non-static symbols that are public and exposed by the shared library. */
 #define __LIBC_ABI_PUBLIC__ __attribute__((visibility ("default")))
 
+/* Old ABIs that are used in 32bit blobs, but shouldn't be exposed in 64bit */
+#if defined(__aarch64__) || defined(__x86_64__) || defined(__mips64__)
+#define __LIBC64_HIDDEN__ __LIBC_HIDDEN__
+#else
+#define __LIBC64_HIDDEN__ __LIBC_ABI_PUBLIC__
+#endif
+
 /* Used to rename functions so that the compiler emits a call to 'x' rather than the function this was applied to. */
 #define __RENAME(x) __asm__(#x)
 
